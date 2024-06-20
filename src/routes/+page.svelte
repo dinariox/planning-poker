@@ -1,10 +1,26 @@
 <script lang="ts">
-	import { addVote, resetVotes, revealVotes } from '../store.js';
+	import { connectWebSocket, addVote, resetVotes, revealVotes } from '../store.js';
 	import PokerCard from '../lib/components/PokerCard.svelte';
 	import VotesDisplay from '../lib/components/VotesDisplay.svelte';
+	import { onMount } from 'svelte';
 
 	let name = '';
 	let values = [1, 2, 3, 5, 8, 13, 20, 40];
+
+	onMount(() => {
+		const storedName = localStorage.getItem('username');
+		if (storedName) {
+			name = storedName;
+		}
+
+		connectWebSocket();
+	});
+
+	$: {
+		if (name) {
+			localStorage.setItem('username', name);
+		}
+	}
 </script>
 
 <main>
