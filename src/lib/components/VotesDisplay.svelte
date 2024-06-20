@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { votes, revealed } from '../../store';
+	import PokerCard from './PokerCard.svelte';
 
 	let currentVotes: Vote[] = [];
 	let isRevealed = false;
@@ -11,7 +12,7 @@
 {#if isRevealed}
 	<ul>
 		{#each currentVotes as vote}
-			<li>{vote.name}: {vote.value}</li>
+			<li>{vote.name}: <PokerCard value={vote.value} /></li>
 		{/each}
 	</ul>
 {:else}
