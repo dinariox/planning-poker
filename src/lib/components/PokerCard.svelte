@@ -27,11 +27,6 @@
 </button>
 
 <style>
-	@font-face {
-		font-family: 'BioRhyme';
-		src: url('/BioRhyme-VariableFont.ttf');
-	}
-
 	button {
 		position: relative;
 		width: 5rem;

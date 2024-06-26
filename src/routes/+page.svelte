@@ -59,17 +59,17 @@
 
 	{#if !name}
 		<input type="text" id="name-input" value={name} placeholder="Dein Name" />
-		<button on:click={handleJoin}>Beitreten</button>
+		<button class="btn" on:click={handleJoin}>Beitreten</button>
 	{:else}
 		<h2>Hallo {name}</h2>
-		<button on:click={handleChangeName}>Namen ändern</button>
+		<button class="btn" on:click={handleChangeName}>Namen ändern</button>
 		<div class="poker-cards">
 			{#each values as value}
 				<PokerCard {value} onClick={() => addVote(name, value)} disabled={isRevealed} />
 			{/each}
 		</div>
-		<button on:click={revealVotes}>Votes anzeigen</button>
-		<button on:click={resetVotes}>Zurücksetzen</button>
+		<button class="btn green" on:click={revealVotes}>Votes anzeigen</button>
+		<button class="btn red" on:click={resetVotes}>Zurücksetzen</button>
 		<VotesDisplay />
 	{/if}
 </main>

@@ -27,6 +27,9 @@ export const connectWebSocket = (name: string) => {
 			case 'reveal':
 				revealed.set(true);
 				break;
+			case 'activeUsers':
+				activeUsers.set(data.activeUsers);
+				break;
 		}
 	};
 };
