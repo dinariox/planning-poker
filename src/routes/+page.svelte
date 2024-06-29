@@ -65,18 +65,22 @@
 	{/if}
 </main>
 
-<style>
+<style lang="scss">
 	main.content {
 		height: 100%;
 		display: flex;
 		flex-direction: column;
 		flex-shrink: 1;
 		align-items: center;
-	}
 
-	.poker-cards {
-		margin: 1rem 0;
-		display: flex;
-		gap: 1rem;
+		h1 {
+			margin: 0;
+		}
+
+		.poker-cards {
+			margin: 1rem 0;
+			display: flex;
+			gap: 1rem;
+		}
 	}
 </style>

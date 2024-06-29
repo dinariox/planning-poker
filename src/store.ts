@@ -3,6 +3,8 @@ import { writable } from 'svelte/store';
 export const users = writable<User[]>([]);
 export const revealed = writable<boolean>(false);
 
+export const darkMode = writable<boolean>(false);
+
 let socket: WebSocket;
 
 export const connectWebSocket = (name: string) => {
