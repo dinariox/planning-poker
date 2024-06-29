@@ -15,8 +15,18 @@
 		src: url('/Inter-VariableFont.ttf');
 	}
 
+	* {
+		box-sizing: border-box;
+	}
+
+	:global(html, body) {
+		margin: 0;
+	}
+
 	main {
 		font-family: 'Inter', sans-serif;
+		padding: 2rem;
+		height: 100vh;
 	}
 
 	:global(button.btn) {

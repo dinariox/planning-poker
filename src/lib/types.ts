@@ -1,4 +1,4 @@
-interface Vote {
+interface User {
 	name: string;
-	value: number;
+	vote: number | null;
 }

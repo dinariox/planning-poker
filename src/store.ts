@@ -1,8 +1,7 @@
 import { writable } from 'svelte/store';
 
-export const votes = writable<Vote[]>([]);
+export const users = writable<User[]>([]);
 export const revealed = writable<boolean>(false);
-export const activeUsers = writable<string[]>([]);
 
 let socket: WebSocket;
 
@@ -16,19 +15,15 @@ export const connectWebSocket = (name: string) => {
 	socket.onmessage = (event) => {
 		const data = JSON.parse(event.data);
 		switch (data.type) {
-			case 'init':
-			case 'vote':
-				votes.set(data.votes);
+			case 'users':
+				users.set(data.users);
 				break;
 			case 'reset':
-				votes.set([]);
+				users.update((users) => users.map((user) => ({ ...user, vote: null })));
 				revealed.set(false);
 				break;
 			case 'reveal':
 				revealed.set(true);
-				break;
-			case 'activeUsers':
-				activeUsers.set(data.activeUsers);
 				break;
 		}
 	};

@@ -1,7 +1,9 @@
 <script lang="ts">
-	export let value;
+	export let value: number | null;
 	export let onClick: Function | null = null;
 	export let disabled = false;
+	export let compact = false;
+	export let unrevealed = false;
 
 	function mapNumber(number: number): string {
 		switch (number) {
@@ -15,18 +17,24 @@
 	}
 </script>
 
-<button
-	on:click={() => (onClick ? onClick(value) : undefined)}
-	class:clickable={!!onClick}
-	class:strong={value === -1}
-	{disabled}
->
-	<p class="small top">{mapNumber(value)}</p>
-	<p>{mapNumber(value)}</p>
-	<p class="small bottom">{mapNumber(value)}</p>
-</button>
+{#if value !== null}
+	<button
+		on:click={() => (onClick ? onClick(value) : undefined)}
+		class:clickable={!!onClick}
+		class:strong={value === -1}
+		class:compact
+		class:unrevealed
+		{disabled}
+	>
+		{#if !unrevealed}
+			<p class="small top">{mapNumber(value)}</p>
+			<p>{mapNumber(value)}</p>
+			<p class="small bottom">{mapNumber(value)}</p>
+		{/if}
+	</button>
+{/if}
 
-<style>
+<style land="scss">
 	button {
 		position: relative;
 		width: 5rem;
@@ -36,22 +44,89 @@
 		border-radius: 0.5rem;
 		box-shadow: 0 0 0 0.12rem #151515;
 		transition: scale 150ms ease-out;
-	}
 
-	button.clickable:not(:disabled) {
-		cursor: pointer;
-	}
+		&.unrevealed {
+			background-color: #ffe4e6;
+			opacity: 0.8;
+			background-image: linear-gradient(
+					30deg,
+					#fb7185 12%,
+					transparent 12.5%,
+					transparent 87%,
+					#fb7185 87.5%,
+					#fb7185
+				),
+				linear-gradient(
+					150deg,
+					#fb7185 12%,
+					transparent 12.5%,
+					transparent 87%,
+					#fb7185 87.5%,
+					#fb7185
+				),
+				linear-gradient(
+					30deg,
+					#fb7185 12%,
+					transparent 12.5%,
+					transparent 87%,
+					#fb7185 87.5%,
+					#fb7185
+				),
+				linear-gradient(
+					150deg,
+					#fb7185 12%,
+					transparent 12.5%,
+					transparent 87%,
+					#fb7185 87.5%,
+					#fb7185
+				),
+				linear-gradient(
+					60deg,
+					#fb718577 25%,
+					transparent 25.5%,
+					transparent 75%,
+					#fb718577 75%,
+					#fb718577
+				),
+				linear-gradient(
+					60deg,
+					#fb718577 25%,
+					transparent 25.5%,
+					transparent 75%,
+					#fb718577 75%,
+					#fb718577
+				);
+			background-size: 16px 28px;
+			background-position:
+				0 0,
+				0 0,
+				8px 14px,
+				8px 14px,
+				0 0,
+				8px 14px;
+		}
 
-	button.clickable:disabled {
-		cursor: not-allowed;
-	}
+		&.compact {
+			width: 4rem;
+		}
 
-	button.clickable:hover:not(:disabled) {
-		scale: 1.05;
-	}
+		&.clickable {
+			&:not(:disabled) {
+				cursor: pointer;
+			}
 
-	button.strong {
-		background-color: #fcd34d;
+			&:disabled {
+				cursor: not-allowed;
+			}
+
+			&:hover:not(:disabled) {
+				scale: 1.05;
+			}
+
+			&.strong {
+				background-color: #fcd34d;
+			}
+		}
 	}
 
 	button p {
@@ -59,6 +134,10 @@
 		font-size: 2.5rem;
 		font-family: 'BioRhyme', sans-serif;
 		z-index: 99;
+	}
+
+	button.compact p {
+		font-size: 2rem;
 	}
 
 	button.strong p {

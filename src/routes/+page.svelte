@@ -45,7 +45,7 @@
 	}
 </script>
 
-<main>
+<main class="content">
 	<h1>Planning Poker</h1>
 
 	{#if !name}
@@ -54,6 +54,7 @@
 	{:else}
 		<h2>Hallo {name}</h2>
 		<button class="btn" on:click={handleChangeName}>Namen ändern</button>
+		<VotesDisplay />
 		<div class="poker-cards">
 			{#each values as value}
 				<PokerCard {value} onClick={() => addVote(name, value)} disabled={isRevealed} />
@@ -61,11 +62,18 @@
 		</div>
 		<button class="btn green" on:click={revealVotes}>Votes anzeigen</button>
 		<button class="btn red" on:click={resetVotes}>Zurücksetzen</button>
-		<VotesDisplay />
 	{/if}
 </main>
 
 <style>
+	main.content {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 1;
+		align-items: center;
+	}
+
 	.poker-cards {
 		margin: 1rem 0;
 		display: flex;
