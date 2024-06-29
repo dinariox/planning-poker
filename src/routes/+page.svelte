@@ -1,12 +1,5 @@
 <script lang="ts">
-	import {
-		connectWebSocket,
-		addVote,
-		resetVotes,
-		revealVotes,
-		revealed,
-		activeUsers
-	} from '../store.js';
+	import { connectWebSocket, addVote, resetVotes, revealVotes, revealed } from '../store.js';
 	import PokerCard from '../lib/components/PokerCard.svelte';
 	import VotesDisplay from '../lib/components/VotesDisplay.svelte';
 	import { onMount } from 'svelte';
@@ -14,10 +7,8 @@
 	let name = '';
 	let values = [0.5, 1, 2, 3, 5, 8, 13, 20, 40, -1];
 	let isRevealed = false;
-	let users: string[] = [];
 
 	revealed.subscribe((r) => (isRevealed = r));
-	activeUsers.subscribe((au) => (users = au));
 
 	onMount(() => {
 		const storedName = localStorage.getItem('username');
