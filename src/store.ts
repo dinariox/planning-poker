@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
 export const users = writable<User[]>([]);
 export const revealed = writable<boolean>(false);
@@ -8,7 +9,7 @@ export const darkMode = writable<boolean>(false);
 let socket: WebSocket;
 
 export const connectWebSocket = (name: string) => {
-	socket = new WebSocket('ws://localhost:9090');
+	socket = new WebSocket(`${PUBLIC_BACKEND_URL}`);
 
 	socket.onopen = () => {
 		socket.send(JSON.stringify({ type: 'join', name }));
