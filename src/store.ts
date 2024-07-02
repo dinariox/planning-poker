@@ -45,3 +45,8 @@ export const resetVotes = () => {
 export const revealVotes = () => {
 	socket?.emit('reveal');
 };
+
+export const disconnectFromSocket = () => {
+	socket?.disconnect();
+	socket = null;
+};

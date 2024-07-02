@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { connectWebSocket, addVote, resetVotes, revealVotes, revealed, users } from '../store.js';
+	import {
+		connectWebSocket,
+		addVote,
+		resetVotes,
+		revealVotes,
+		revealed,
+		users,
+		disconnectFromSocket
+	} from '../store.js';
 	import PokerCard from '../lib/components/PokerCard.svelte';
 	import { onMount } from 'svelte';
 	import PokerTable from '../lib/components/PokerTable.svelte';
@@ -41,13 +49,14 @@
 		}
 
 		if (name) {
-			location.reload();
+			connectWebSocket(name);
 		}
 	}
 
 	function handleChangeName() {
 		localStorage.removeItem('username');
 		name = '';
+		disconnectFromSocket();
 	}
 
 	function handleVote(name: string, value: number) {
@@ -85,6 +94,7 @@
 				value={name}
 				placeholder="Dein Name"
 				maxlength="15"
+				autofocus
 				on:keydown={handleKeydown}
 			/>
 			<button class="btn green" on:click={handleJoin}>Beitreten</button>
