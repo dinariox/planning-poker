@@ -1,55 +1,47 @@
 import { writable } from 'svelte/store';
 import { PUBLIC_BACKEND_URL } from '$env/static/public';
+import { io, type Socket } from 'socket.io-client';
 
 export const users = writable<User[]>([]);
 export const revealed = writable<boolean>(false);
 
 export const darkMode = writable<boolean>(false);
 
-let socket: WebSocket;
-let keepAliveInterval: number;
+let socket: Socket | null;
 
 export const connectWebSocket = (name: string) => {
-	socket = new WebSocket(`${PUBLIC_BACKEND_URL}`);
+	socket = io(`${PUBLIC_BACKEND_URL}`);
 
-	socket.onopen = () => {
-		socket.send(JSON.stringify({ type: 'join', name }));
+	socket.on('connect', () => {
+		socket?.emit('join', name);
+	});
 
-		// Start Keep-Alive
-		keepAliveInterval = setInterval(() => {
-			socket.send(JSON.stringify({ type: 'keepalive' }));
-		}, 30000);
-	};
+	socket.on('users', (data) => {
+		users.set(data);
+	});
 
-	socket.onmessage = (event) => {
-		const data = JSON.parse(event.data);
-		switch (data.type) {
-			case 'users':
-				users.set(data.users);
-				break;
-			case 'reset':
-				users.update((users) => users.map((user) => ({ ...user, vote: null })));
-				revealed.set(false);
-				break;
-			case 'reveal':
-				revealed.set(true);
-				break;
-		}
-	};
+	socket.on('reset', () => {
+		users.update((users) => users.map((user) => ({ ...user, vote: null })));
+		revealed.set(false);
+	});
 
-	socket.onclose = () => {
-		clearInterval(keepAliveInterval);
-	};
+	socket.on('reveal', () => {
+		revealed.set(true);
+	});
+
+	socket.on('disconnect', () => {
+		socket = null;
+	});
 };
 
 export const addVote = (name: string, value: number) => {
-	socket.send(JSON.stringify({ type: 'vote', name, value }));
+	socket?.emit('vote', { name, value });
 };
 
 export const resetVotes = () => {
-	socket.send(JSON.stringify({ type: 'reset' }));
+	socket?.emit('reset');
 };
 
 export const revealVotes = () => {
-	socket.send(JSON.stringify({ type: 'reveal' }));
+	socket?.emit('reveal');
 };
