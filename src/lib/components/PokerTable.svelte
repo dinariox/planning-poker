@@ -4,9 +4,19 @@
 
 	let isRevealed = false;
 	let userList: User[] = [];
+	let average: number = 0;
 
 	revealed.subscribe((r) => (isRevealed = r));
-	users.subscribe((u) => (userList = u));
+	users.subscribe((u) => {
+		userList = u;
+		calculateAverage();
+	});
+
+	function calculateAverage() {
+		const usersWithVotes = userList.filter((user) => user.vote !== null);
+		const totalVotes = usersWithVotes.reduce((sum, user) => sum + user.vote!, 0);
+		average = usersWithVotes.length > 0 ? totalVotes / usersWithVotes.length : 0;
+	}
 </script>
 
 <div class="poker-table-container">
@@ -23,6 +33,9 @@
 				</div>
 			{/each}
 		</div>
+		{#if isRevealed}
+			<p class="average">Ø <span>{Math.round(average * 10) / 10}</span></p>
+		{/if}
 	</div>
 </div>
 
@@ -58,6 +71,7 @@
 				box-shadow: 0.1rem 0.1rem 0.3rem rgba(0, 0, 0, 0.3);
 				color: white;
 				transition: background-color 300ms;
+				animation: fade-in 300ms ease-out;
 
 				&:nth-of-type(1) {
 					top: 12%;
@@ -175,6 +189,31 @@
 					left: 6%;
 				}
 			}
+
+			p.average {
+				margin: 0;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				translate: -50% -50%;
+				font-size: 1.25rem;
+				font-family: 'BioRhyme';
+				color: var(--average-fg-color);
+				animation: fade-in 300ms ease-out;
+
+				span {
+					font-size: 2.5rem;
+				}
+			}
+		}
+	}
+
+	@keyframes fade-in {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
 		}
 	}
 </style>

@@ -93,6 +93,7 @@
 		--poker-table-color: #15803d;
 		--poker-table-border-color: #fbbf24;
 		--username-bg-color: #15803d;
+		--average-fg-color: #86efac;
 
 		/* TODO: Card colors */
 		font-family: 'Inter', sans-serif;
@@ -120,6 +121,7 @@
 		--poker-table-color: #166534;
 		--poker-table-border-color: #c9981c;
 		--username-bg-color: #166534;
+		--average-fg-color: #86efac;
 	}
 
 	:global(input[type='text']) {

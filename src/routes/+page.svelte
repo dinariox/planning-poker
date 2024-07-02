@@ -88,6 +88,7 @@
 	{#if !name}
 		<p><b>Willkommen!</b> Bitte gib deinen Namen ein, um teilzunehmen.</p>
 		<div class="name-input-container">
+			<!-- svelte-ignore a11y-autofocus -->
 			<input
 				type="text"
 				id="name-input"
