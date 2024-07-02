@@ -116,6 +116,11 @@
 		--username-bg-color: #166534;
 	}
 
+	:global(input[type='text']) {
+		font-family: 'Inter', sans-serif;
+		font-weight: 500;
+	}
+
 	:global(button.btn) {
 		padding: 0.5rem 0.9rem;
 		font-size: 1rem;
