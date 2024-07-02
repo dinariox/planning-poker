@@ -84,7 +84,7 @@
 		</div>
 	{:else}
 		<div class="name-display-container">
-			<p>Hallo <b>{name}</b></p>
+			<p class="hello-text">Hallo <b>{name}</b></p>
 			<button class="edit-btn" on:click={handleChangeName}>
 				<svg
 					data-slot="icon"
@@ -164,6 +164,12 @@
 		div.name-display-container {
 			display: flex;
 			align-items: center;
+
+			margin-top: 0.5rem;
+
+			p.hello-text {
+				margin: 0;
+			}
 		}
 
 		div.name-input-container {

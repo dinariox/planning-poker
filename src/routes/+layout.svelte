@@ -1,12 +1,18 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { darkMode } from '../store';
 
-	let isDarkMode = false;
+	let isDarkMode: boolean = false;
 
-	darkMode.subscribe((dm) => (isDarkMode = dm));
+	onMount(() => {
+		isDarkMode = localStorage.getItem('darkmode') === 'true';
+		darkMode.set(isDarkMode);
+		darkMode.subscribe((dm) => (isDarkMode = dm));
+	});
 
 	function toggleDarkMode() {
 		darkMode.set(!isDarkMode);
+		localStorage.setItem('darkmode', String(isDarkMode));
 	}
 </script>
 
