@@ -7,12 +7,18 @@ export const revealed = writable<boolean>(false);
 export const darkMode = writable<boolean>(false);
 
 let socket: WebSocket;
+let keepAliveInterval: number;
 
 export const connectWebSocket = (name: string) => {
 	socket = new WebSocket(`${PUBLIC_BACKEND_URL}`);
 
 	socket.onopen = () => {
 		socket.send(JSON.stringify({ type: 'join', name }));
+
+		// Start Keep-Alive
+		keepAliveInterval = setInterval(() => {
+			socket.send(JSON.stringify({ type: 'keepalive' }));
+		}, 30000);
 	};
 
 	socket.onmessage = (event) => {
@@ -29,6 +35,10 @@ export const connectWebSocket = (name: string) => {
 				revealed.set(true);
 				break;
 		}
+	};
+
+	socket.onclose = () => {
+		clearInterval(keepAliveInterval);
 	};
 };
 
