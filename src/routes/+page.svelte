@@ -1,14 +1,20 @@
 <script lang="ts">
-	import { connectWebSocket, addVote, resetVotes, revealVotes, revealed } from '../store.js';
+	import { connectWebSocket, addVote, resetVotes, revealVotes, revealed, users } from '../store.js';
 	import PokerCard from '../lib/components/PokerCard.svelte';
-	import VotesDisplay from '../lib/components/VotesDisplay.svelte';
 	import { onMount } from 'svelte';
+	import PokerTable from '../lib/components/PokerTable.svelte';
 
 	let name = '';
 	let values = [0.5, 1, 2, 3, 5, 8, 13, 20, 40, -1];
 	let isRevealed = false;
+	let userVotes: User[] = [];
+	let myVote: number | null = null;
 
 	revealed.subscribe((r) => (isRevealed = r));
+	users.subscribe((u) => {
+		userVotes = u;
+		myVote = getMyVote();
+	});
 
 	onMount(() => {
 		const storedName = localStorage.getItem('username');
@@ -43,6 +49,15 @@
 		localStorage.removeItem('username');
 		name = '';
 	}
+
+	function handleVote(name: string, value: number) {
+		addVote(name, value);
+		myVote = value;
+	}
+
+	function getMyVote() {
+		return userVotes.find((u) => u.name === name)?.vote ?? null;
+	}
 </script>
 
 <main class="content">
@@ -54,10 +69,15 @@
 	{:else}
 		<h2>Hallo {name}</h2>
 		<button class="btn" on:click={handleChangeName}>Namen ändern</button>
-		<VotesDisplay />
+		<PokerTable />
 		<div class="poker-cards">
 			{#each values as value}
-				<PokerCard {value} onClick={() => addVote(name, value)} disabled={isRevealed} />
+				<PokerCard
+					{value}
+					onClick={() => handleVote(name, value)}
+					disabled={isRevealed}
+					selected={myVote === value}
+				/>
 			{/each}
 		</div>
 		<button class="btn green" on:click={revealVotes}>Votes anzeigen</button>

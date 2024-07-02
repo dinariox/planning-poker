@@ -12,7 +12,11 @@
 
 <main class:dark-mode={isDarkMode}>
 	<slot></slot>
-	<button class="dark-mode-toggle btn" on:click={toggleDarkMode}>
+	<button
+		class="dark-mode-toggle btn"
+		on:click={toggleDarkMode}
+		title={`Zu ${isDarkMode ? 'hellem' : 'dunklem'} Design wechseln`}
+	>
 		{#if isDarkMode}
 			<svg
 				data-slot="icon"
@@ -69,60 +73,83 @@
 	}
 
 	main {
+		--bg-color: #fafaf9;
+		--fg-color: #0c0a09;
+		--button-bg-color: #d6d3d1;
+		--button-fg-color: black;
+		--button-hover-color: #a8a29e;
+		--button-red-bg-color: #fca5a5;
+		--button-red-hover-color: #f87171;
+		--button-green-bg-color: #86efac;
+		--button-green-hover-color: #4ade80;
+		--card-bg-color: #fef3c7;
+		--strong-card-bg-color: #fcd34d;
+		--poker-table-color: #15803d;
+		--poker-table-border-color: #fbbf24;
+		--username-bg-color: #15803d;
+
+		/* TODO: Card colors */
 		font-family: 'Inter', sans-serif;
 		padding: 2rem;
 		height: 100vh;
-		background-color: #fafaf9;
+		background-color: var(--bg-color);
+		color: var(--fg-color);
 		transition:
 			background-color 300ms,
 			color 300ms;
 	}
 
 	main.dark-mode {
-		background-color: #0c0a09;
-		color: #fafaf9;
+		--bg-color: #0c0a09;
+		--fg-color: #fafaf9;
+		--button-bg-color: #57534e;
+		--button-fg-color: white;
+		--button-hover-color: #78716c;
+		--button-red-bg-color: #991b1b;
+		--button-red-hover-color: #b91c1c;
+		--button-green-bg-color: #15803d;
+		--button-green-hover-color: #16a34a;
+		--card-bg-color: #fde68a;
+		--strong-card-bg-color: #fcd34d;
+		--poker-table-color: #166534;
+		--poker-table-border-color: #c9981c;
+		--username-bg-color: #166534;
 	}
 
 	:global(button.btn) {
 		padding: 0.5rem 0.9rem;
 		font-size: 1rem;
-		background-color: #d6d3d1;
+		background-color: var(--button-bg-color);
+		color: var(--button-fg-color);
 		border: 0.12rem solid #292524;
 		border-radius: 0.25rem;
-		transition: background-color 150ms;
+		transition:
+			background-color 150ms,
+			color 150ms;
 	}
 	:global(button.btn:hover) {
 		cursor: pointer;
-		background-color: #a8a29e;
+		background-color: var(--button-hover-color);
 	}
 
 	:global(button.btn.green) {
-		background-color: #86efac;
+		background-color: var(--button-green-bg-color);
 	}
 	:global(button.btn.green:hover) {
-		background-color: #4ade80;
+		background-color: var(--button-green-hover-color);
 	}
 
 	:global(button.btn.red) {
-		background-color: #fca5a5;
+		background-color: var(--button-red-bg-color);
 	}
 	:global(button.btn.red:hover) {
-		background-color: #f87171;
+		background-color: var(--button-red-hover-color);
 	}
 
 	button.dark-mode-toggle {
 		position: absolute;
 		top: 1rem;
 		left: 1rem;
-	}
-
-	main.dark-mode button.dark-mode-toggle {
-		background-color: #292524;
-		color: white;
-
-		&:hover {
-			background-color: #44403c;
-		}
 	}
 
 	button.dark-mode-toggle svg {

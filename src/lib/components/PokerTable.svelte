@@ -37,23 +37,27 @@
 		div.poker-table {
 			height: 80%;
 			aspect-ratio: 3/2;
-			background-color: #15803d;
+			background-color: var(--poker-table-color);
 			border-radius: 9999px;
-			border: 1.5rem solid #fbbf24;
+			border: 1.5rem solid var(--poker-table-border-color);
 			box-shadow:
 				0.25rem 0.25rem 0.6rem rgba(0, 0, 0, 0.4),
 				inset 0.1rem 0.1rem 0.3rem rgba(0, 0, 0, 0.4);
 			position: relative;
+			transition:
+				background-color 300ms,
+				border 300ms;
 
 			div.user {
 				position: absolute;
 				font-weight: 600;
 				letter-spacing: 1px;
 				padding: 0.5rem 0.75rem;
-				background-color: #15803d;
+				background-color: var(--username-bg-color);
 				border-radius: 0.25rem;
 				box-shadow: 0.1rem 0.1rem 0.3rem rgba(0, 0, 0, 0.3);
 				color: white;
+				transition: background-color 300ms;
 
 				&:nth-of-type(1) {
 					top: 12%;

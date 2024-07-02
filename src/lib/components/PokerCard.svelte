@@ -4,6 +4,7 @@
 	export let disabled = false;
 	export let compact = false;
 	export let unrevealed = false;
+	export let selected = false;
 
 	function mapNumber(number: number): string {
 		switch (number) {
@@ -24,6 +25,7 @@
 		class:strong={value === -1}
 		class:compact
 		class:unrevealed
+		class:selected
 		{disabled}
 	>
 		{#if !unrevealed}
@@ -36,14 +38,23 @@
 
 <style land="scss">
 	button {
+		--base-shadow: 0 0 0 0.12rem #151515;
+		--selected-shadow: 0 0 0 0.36rem #22c55e;
+
 		position: relative;
 		width: 5rem;
 		aspect-ratio: 2 / 3;
-		background-color: #fef3c7;
+		background-color: var(--card-bg-color);
 		border: solid 0.35rem white;
 		border-radius: 0.5rem;
-		box-shadow: 0 0 0 0.12rem #151515;
-		transition: scale 150ms ease-out;
+		box-shadow: var(--base-shadow);
+		transition:
+			scale 150ms ease-out,
+			box-shadow 150ms;
+
+		&.selected {
+			box-shadow: var(--base-shadow), var(--selected-shadow);
+		}
 
 		&.unrevealed {
 			background-color: #ffe4e6;
@@ -124,7 +135,7 @@
 			}
 
 			&.strong {
-				background-color: #fcd34d;
+				background-color: var(--strong-card-bg-color);
 			}
 		}
 	}
