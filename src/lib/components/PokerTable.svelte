@@ -13,7 +13,7 @@
 	});
 
 	function calculateAverage() {
-		const usersWithVotes = userList.filter((user) => user.vote !== null);
+		const usersWithVotes = userList.filter((user) => user.vote !== null && user.vote !== -1);
 		const totalVotes = usersWithVotes.reduce((sum, user) => sum + user.vote!, 0);
 		average = usersWithVotes.length > 0 ? totalVotes / usersWithVotes.length : 0;
 	}
