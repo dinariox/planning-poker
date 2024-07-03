@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { revealed, users } from '../../store';
+	import { revealed, revealVotes, resetVotes, users } from '../../store';
 	import PokerCard from './PokerCard.svelte';
+
+	export let compact = false;
 
 	let isRevealed = false;
 	let userList: User[] = [];
@@ -20,7 +22,7 @@
 </script>
 
 <div class="poker-table-container">
-	<div class="poker-table">
+	<div class="poker-table" class:compact>
 		<div class="users">
 			{#each userList as user}
 				<div class="user">{user.name}</div>
@@ -29,20 +31,24 @@
 		<div class="vote-cards">
 			{#each userList as user}
 				<div class="vote-card">
-					<PokerCard compact={true} value={user.vote} unrevealed={!isRevealed} />
+					<PokerCard compact value={user.vote} unrevealed={!isRevealed} />
 				</div>
 			{/each}
 		</div>
 		{#if isRevealed}
 			<p class="average">Ø <span>{Math.round(average * 10) / 10}</span></p>
 		{/if}
+		<div class="action-buttons">
+			<button class="green" on:click={revealVotes}>Aufdecken</button>
+			<button class="red" on:click={resetVotes}>Zurücksetzen</button>
+		</div>
 	</div>
 </div>
 
 <style lang="scss">
 	div.poker-table-container {
 		height: 100%;
-		padding: 2rem;
+		padding: 1.5rem;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -60,6 +66,10 @@
 			transition:
 				background-color 300ms,
 				border 300ms;
+
+			&.compact {
+				border: 1.2rem solid var(--poker-table-border-color);
+			}
 
 			div.user {
 				position: absolute;
@@ -203,6 +213,48 @@
 
 				span {
 					font-size: 2.5rem;
+				}
+			}
+
+			div.action-buttons {
+				display: flex;
+				gap: 0.5rem;
+				position: absolute;
+				bottom: 30%;
+				left: 50%;
+				translate: -50%;
+
+				button {
+					background-color: transparent;
+					border: 0.15rem solid;
+					border-radius: 0.25rem;
+					padding: 0.25rem 0.5rem;
+					font-size: 1rem;
+					font-family: 'Inter', sans-serif;
+					cursor: pointer;
+					transition:
+						border-color 150ms,
+						color 150ms;
+
+					&.green {
+						border-color: var(--button-green-bg-color);
+						color: var(--button-green-bg-color);
+
+						&:hover {
+							border-color: var(--button-green-hover-color);
+							color: var(--button-green-hover-color);
+						}
+					}
+
+					&.red {
+						border-color: var(--button-red-bg-color);
+						color: var(--button-red-bg-color);
+
+						&:hover {
+							border-color: var(--button-red-hover-color);
+							color: var(--button-red-hover-color);
+						}
+					}
 				}
 			}
 		}

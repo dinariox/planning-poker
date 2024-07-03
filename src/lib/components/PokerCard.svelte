@@ -133,10 +133,10 @@
 			&:hover:not(:disabled) {
 				scale: 1.05;
 			}
+		}
 
-			&.strong {
-				background-color: var(--strong-card-bg-color);
-			}
+		&.strong {
+			background-color: var(--strong-card-bg-color);
 		}
 	}
 

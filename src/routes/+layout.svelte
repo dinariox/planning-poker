@@ -84,10 +84,10 @@
 		--button-bg-color: #d6d3d1;
 		--button-fg-color: black;
 		--button-hover-color: #a8a29e;
-		--button-red-bg-color: #fca5a5;
-		--button-red-hover-color: #f87171;
-		--button-green-bg-color: #86efac;
-		--button-green-hover-color: #4ade80;
+		--button-red-bg-color: #f87171;
+		--button-red-hover-color: #ef4444;
+		--button-green-bg-color: #4ade80;
+		--button-green-hover-color: #22c55e;
 		--card-bg-color: #fef3c7;
 		--strong-card-bg-color: #fcd34d;
 		--poker-table-color: #15803d;
@@ -97,7 +97,7 @@
 
 		/* TODO: Card colors */
 		font-family: 'Inter', sans-serif;
-		padding: 2rem;
+		padding: 1.5rem 2rem 0.5rem 2rem;
 		height: 100vh;
 		background-color: var(--bg-color);
 		color: var(--fg-color);
@@ -112,10 +112,10 @@
 		--button-bg-color: #57534e;
 		--button-fg-color: white;
 		--button-hover-color: #78716c;
-		--button-red-bg-color: #991b1b;
-		--button-red-hover-color: #b91c1c;
-		--button-green-bg-color: #15803d;
-		--button-green-hover-color: #16a34a;
+		--button-red-bg-color: #ef4444;
+		--button-red-hover-color: #f87171;
+		--button-green-bg-color: #22c55e;
+		--button-green-hover-color: #4ade80;
 		--card-bg-color: #fde68a;
 		--strong-card-bg-color: #fcd34d;
 		--poker-table-color: #166534;
@@ -143,20 +143,6 @@
 	:global(button.btn:hover) {
 		cursor: pointer;
 		background-color: var(--button-hover-color);
-	}
-
-	:global(button.btn.green) {
-		background-color: var(--button-green-bg-color);
-	}
-	:global(button.btn.green:hover) {
-		background-color: var(--button-green-hover-color);
-	}
-
-	:global(button.btn.red) {
-		background-color: var(--button-red-bg-color);
-	}
-	:global(button.btn.red:hover) {
-		background-color: var(--button-red-hover-color);
 	}
 
 	button.dark-mode-toggle {

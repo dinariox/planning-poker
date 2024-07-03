@@ -1,13 +1,5 @@
 <script lang="ts">
-	import {
-		connectWebSocket,
-		addVote,
-		resetVotes,
-		revealVotes,
-		revealed,
-		users,
-		disconnectFromSocket
-	} from '../store.js';
+	import { connectWebSocket, addVote, revealed, users, disconnectFromSocket } from '../store.js';
 	import PokerCard from '../lib/components/PokerCard.svelte';
 	import { onMount } from 'svelte';
 	import PokerTable from '../lib/components/PokerTable.svelte';
@@ -17,6 +9,7 @@
 	let isRevealed = false;
 	let userVotes: User[] = [];
 	let myVote: number | null = null;
+	let windowHeight: number = 0;
 
 	revealed.subscribe((r) => (isRevealed = r));
 	users.subscribe((u) => {
@@ -25,11 +18,16 @@
 	});
 
 	onMount(() => {
+		windowHeight = window.innerHeight;
 		const storedName = localStorage.getItem('username');
 		if (storedName) {
 			name = storedName;
 			connectWebSocket(name);
 		}
+
+		window.onresize = () => {
+			windowHeight = window.innerHeight;
+		};
 	});
 
 	$: {
@@ -125,7 +123,7 @@
 				</svg>
 			</button>
 		</div>
-		<PokerTable />
+		<PokerTable compact={windowHeight < 1000} />
 		<div class="poker-cards">
 			{#each values as value}
 				<PokerCard
@@ -133,12 +131,9 @@
 					onClick={() => handleVote(name, value)}
 					disabled={isRevealed}
 					selected={myVote === value}
+					compact={windowHeight < 1000}
 				/>
 			{/each}
-		</div>
-		<div class="action-buttons">
-			<button class="btn green" on:click={revealVotes}>Votes anzeigen</button>
-			<button class="btn red" on:click={resetVotes}>Zurücksetzen</button>
 		</div>
 	{/if}
 </main>
@@ -159,12 +154,6 @@
 			margin: 1rem 0;
 			display: flex;
 			gap: 1rem;
-		}
-
-		div.action-buttons {
-			display: flex;
-			gap: 0.5rem;
-			margin-top: 0.5rem;
 		}
 
 		button.edit-btn {
