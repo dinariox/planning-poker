@@ -135,7 +135,7 @@
 			}
 		}
 
-		&.strong {
+		&.strong:not(.unrevealed) {
 			background-color: var(--strong-card-bg-color);
 		}
 	}
