@@ -3,6 +3,7 @@
 	import PokerCard from '../lib/components/PokerCard.svelte';
 	import { onMount } from 'svelte';
 	import PokerTable from '../lib/components/PokerTable.svelte';
+	import ReferenceStories from '$lib/components/ReferenceStories.svelte';
 
 	let name = '';
 	let values = [0.5, 1, 2, 3, 5, 8, 13, 20, 40, -1];
@@ -10,6 +11,7 @@
 	let userVotes: User[] = [];
 	let myVote: number | null = null;
 	let windowHeight: number = 0;
+	let copyrightYears = '2024';
 
 	revealed.subscribe((r) => (isRevealed = r));
 	users.subscribe((u) => {
@@ -28,6 +30,11 @@
 		window.onresize = () => {
 			windowHeight = window.innerHeight;
 		};
+
+		const currentYear = new Date().getFullYear();
+		if (currentYear !== 2024) {
+			copyrightYears += `-${currentYear}`;
+		}
 	});
 
 	$: {
@@ -137,6 +144,8 @@
 		</div>
 	{/if}
 </main>
+<ReferenceStories />
+<p id="copyright">&#169; {copyrightYears} Timo Nowak</p>
 
 <style lang="scss">
 	main.content {
@@ -207,5 +216,14 @@
 			border: 0.12rem solid #292524;
 			border-radius: 0.25rem;
 		}
+	}
+
+	#copyright {
+		position: absolute;
+		margin: 0;
+		top: 1rem;
+		right: 1rem;
+		font-size: 0.8rem;
+		opacity: 0.3;
 	}
 </style>
